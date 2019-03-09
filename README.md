@@ -1,4 +1,4 @@
-# style-me
+# Artsie - Arty Selfies with Arbitrary Style Transfer
 
 
 ## Installation
