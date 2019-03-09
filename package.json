@@ -1,0 +1,22 @@
+{
+  "name": "artsie",
+  "version": "0.0.1",
+  "description": "Arbitratry Style Transfer selfies with Tensoflow and Magenta.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anders Weijnitz",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "fs-extra": "^7.0.1",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-cli": "^2.0.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-uglify": "^3.0.1"
+  }
+}

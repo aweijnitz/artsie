@@ -1,0 +1,48 @@
+<html>
+<head>
+    <!-- Load @magenta/image -->
+    <script src="https://cdn.jsdelivr.net/npm/@magenta/image@0.2.1"></script>
+</head>
+<body>
+<img id="content" height="256" src="img/this-person-does-not-exist.png"/>
+<img id="style" height="256" src="img/teststyle.jpg"/>
+<canvas id="stylized" height="256"></canvas>
+<br>
+<br>
+
+<button id="stylizeBtn">Stylize</button>
+<script>
+    const model = new mi.ArbitraryStyleTransferNetwork();
+    const contentImg = document.getElementById('content');
+    const styleImg = document.getElementById('style');
+    const stylizedCanvas = document.getElementById('stylized');
+    const stylizeBtn = document.getElementById('stylizeBtn');
+    const strength = 0.8;
+
+    const ctx = stylizedCanvas.getContext('2d');
+
+    function clearCanvas() {
+        ctx.clearRect(0, 0, stylizedCanvas.width, stylizedCanvas.height);
+        ctx.font = "36px Roboto";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "#7777aa";
+        ctx.fillText("...", stylizedCanvas.width / 2, stylizedCanvas.height / 2);
+    }
+
+    function stylize() {
+        console.log('Styling...');
+        model.stylize(contentImg, styleImg, strength).then((imageData) => {
+            console.log('DONE');
+            stylizedCanvas.getContext('2d').putImageData(imageData, 0, 0);
+        });
+    }
+
+    clearCanvas();
+    stylizeBtn.addEventListener('click', stylize);
+    model.initialize().then(() => {
+        console.log('READY');
+    });
+</script>
+</body>
+</html>
