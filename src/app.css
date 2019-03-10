@@ -13,7 +13,7 @@ button {
   background-color: #7a867a;
   border: none;
   color: #eaf8ea;
-  padding: 0.5em 0.5em;
+  padding: 0.6em 0.7em;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -63,6 +63,13 @@ video {
 
 #stylized_original {
   display: none;
+}
+
+#saveImage {
+  display: none;
+  position: relative;
+  top: 19em;
+  left: 11em;
 }
 
 #spinner {

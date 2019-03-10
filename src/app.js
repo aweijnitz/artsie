@@ -7,7 +7,7 @@
     var model = new mi.ArbitraryStyleTransferNetwork();
     var stylizedOriginalCanvas = document.getElementById('stylized_original');
     var stylizedCanvas = document.getElementById('stylized');
-
+    var saveImageButton = $('#saveImage');
     var videoGrab = document.getElementById('photo');
     var styleStrength = 0.8;
     var pictureTaken = false;
@@ -27,7 +27,7 @@
     function hideCamera(onComplete) {
         cameraShowing = false;
         $('.source').toggle(function () {
-            clearStyledCanvas()
+            clearStyledCanvas();
             $('.combined').toggle(onComplete);
         });
     }
@@ -70,12 +70,20 @@
     }
 
     function restart() {
+        saveImageButton.hide(200);
         showCamera(function () {
             $('#takePic').html('Take Picture');
             $('#takePic').off("click");
             $('#takePic').click(takePicture);
         });
 
+    }
+
+    function downloadImageAction() {
+        var link = document.createElement('a');
+        link.download = 'artsie-portrait.png';
+        link.href = stylizedOriginalCanvas.toDataURL("image/png");
+        link.click();
     }
 
     function takePicture() {
@@ -112,6 +120,7 @@
             model.stylize(videoGrab, styleImgElement, strength).then(function (imageData) {
                 setSpinner(false);
                 drawCombinedResult(imageData);
+                saveImageButton.show(200);
                 console.log('Applying style to image - DONE');
             });
         });
@@ -122,8 +131,12 @@
     $('#applyStyleButton').click(function () {
         if (cameraShowing)
             takePicture();
-        applyStyle(getStyleImage(), styleStrength);
+
+        saveImageButton.hide(200, function () {
+            applyStyle(getStyleImage(), styleStrength);
+        });
     });
+    saveImageButton.click(downloadImageAction);
 
     /** The carousel contains the style images to will apply to the source image.
      When the user swipes to a new image, that style will be applied.
