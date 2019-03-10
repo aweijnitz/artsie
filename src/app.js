@@ -14,7 +14,6 @@
     var cameraShowing = true;
 
     function setSpinner(onOff, cb) {
-        console.log('setSpinner ' + onOff);
         onOff ? $('#spinner').show(100, cb) : $('#spinner').hide(cb);
 
     }
@@ -39,7 +38,6 @@
         });
     }
 
-
     function getStyleImage() {
         return $('#lightSlider').children(".active").children()[0]
     }
@@ -61,11 +59,8 @@
                 0, 0, stylizedOriginalCanvas.width, stylizedOriginalCanvas.height,
                 0, 0, stylizedCanvas.width, stylizedCanvas.height);
 
-
         $('.combined').width('100%');
         $('.combined').height('100%');
-//        console.log('videoWidth' + videoElement.videoWidth + ' .combined width: ' + $('.combined').width() + ' #stylzyed width: ' + $('#stylized').width());
-//        console.log('videoHeight ' + videoElement.videoHeight + ' .combined height: ' + $('.combined').height() + ' #stylzyed height: ' + $('#stylized').height());
 
     }
 
@@ -106,6 +101,16 @@
     };
 
 
+    /**
+     * Apply the selected style image to the photo.
+     * This is the meat of the whole app. It sends the photo and the style image
+     * into the arbitrary style transfer network and draws the result.
+     *
+     * Consumes a lot of GPU and CPU!
+     *
+     * @param styleImgElement
+     * @param strength - How much styling should be applied (think of it like a mixer value)
+     */
     function applyStyle(styleImgElement, strength) {
 
         if (!cameraAvailable)
