@@ -89,10 +89,7 @@ const watchFiles = () => {
 
 const watchLocal = gulp.parallel(watchFiles, browserSync);
 
-const watchInstall = (done) => {
-  distDir = webRoot;
-  return gulp.parallel(watchFiles, browserSync)(done);
-};
+
 
 const defaultTask = () => {
   return gulp.series(clean, build);
@@ -102,5 +99,5 @@ exports.clean = clean;
 exports.build = build;
 exports.install = install;
 exports.watch_local = watchLocal;
-exports.watch_install = watchInstall;
+
 exports.default = defaultTask;

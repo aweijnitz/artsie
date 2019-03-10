@@ -5,15 +5,18 @@
     var cameraAvailable = false;
     var videoElement = document.querySelector('video');
     var model = new mi.ArbitraryStyleTransferNetwork();
+    var stylizedOriginalCanvas = document.getElementById('stylized_original');
     var stylizedCanvas = document.getElementById('stylized');
+
     var videoGrab = document.getElementById('photo');
     var styleStrength = 0.8;
     var pictureTaken = false;
     var cameraShowing = true;
 
-    function setSpinner(onOff) {
+    function setSpinner(onOff, cb) {
         console.log('setSpinner ' + onOff);
-        onOff ? $('#spinner').show() : $('#spinner').hide();
+        onOff ? $('#spinner').show(100, cb) : $('#spinner').hide(cb);
+
     }
 
     function clearStyledCanvas() {
@@ -41,6 +44,31 @@
         return $('#lightSlider').children(".active").children()[0]
     }
 
+    function drawCombinedResult(imageData) {
+
+        // Original is bigger than most phone screens, so save in hidden canvas
+        // then draw to smaller canvas for display
+        stylizedOriginalCanvas.width = imageData.width;
+        stylizedOriginalCanvas.height = imageData.height;
+
+        stylizedOriginalCanvas.getContext('2d').putImageData(imageData, 0, 0);
+
+        // Fit it
+        stylizedCanvas.width = imageData.width * 0.5;
+        stylizedCanvas.height = imageData.height * 0.5;
+        stylizedCanvas.getContext('2d')
+            .drawImage(stylizedOriginalCanvas,
+                0, 0, stylizedOriginalCanvas.width, stylizedOriginalCanvas.height,
+                0, 0, stylizedCanvas.width, stylizedCanvas.height);
+
+
+        $('.combined').width('100%');
+        $('.combined').height('100%');
+//        console.log('videoWidth' + videoElement.videoWidth + ' .combined width: ' + $('.combined').width() + ' #stylzyed width: ' + $('#stylized').width());
+//        console.log('videoHeight ' + videoElement.videoHeight + ' .combined height: ' + $('.combined').height() + ' #stylzyed height: ' + $('#stylized').height());
+
+    }
+
     function restart() {
         showCamera(function () {
             $('#takePic').html('Take Picture');
@@ -63,7 +91,6 @@
             applyStyle(getStyleImage(), styleStrength);
         });
 
-        $('.combined').height(videoElement.videoHeight);
         $('#takePic').html('Show Camera');
         $('#takePic').off("click");
         $('#takePic').click(restart);
@@ -79,13 +106,14 @@
             takePicture(); // Grab pixels
 
 
-        console.log('Applying style to image - BEGIN');
-        setSpinner(true);
-        // API: https://github.com/tensorflow/magenta-js/blob/master/image/src/arbitrary_stylization/model.ts
-        model.stylize(videoGrab, styleImgElement, strength).then((imageData) => {
-            stylizedCanvas.getContext('2d').putImageData(imageData, 0, 0);
-            console.log('Applying style to image - DONE');
-            setSpinner(false);
+        setSpinner(true, function () {
+            console.log('Applying style to image - START');
+            // API: https://github.com/tensorflow/magenta-js/blob/master/image/src/arbitrary_stylization/model.ts
+            model.stylize(videoGrab, styleImgElement, strength).then(function (imageData) {
+                setSpinner(false);
+                drawCombinedResult(imageData);
+                console.log('Applying style to image - DONE');
+            });
         });
 
     };
@@ -137,6 +165,7 @@
     }
 
     function handleError(error) {
+        alert('Could not initialize camera!');
         console.error('Error: ', error);
     }
 
@@ -149,8 +178,6 @@
         }
         var constraints = {
             video: {
-                width: {max: 256},
-                height: {max: 256},
                 deviceId: {exact: videoSelect.value}
             }
         };

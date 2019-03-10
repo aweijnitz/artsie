@@ -30,17 +30,17 @@
         Camera: <select id="videoSource"></select>
     </div>
 </div>
+<canvas id="photo"></canvas> <!-- Hidden canvas to store the pixels grabbed from the camera -->
+<canvas id="stylized_original"></canvas> <!-- Hidden canvas to store the pixels generated from the model -->
 
 <div class="container" role="main">
     <div class="inputOutput">
         <div id="spinner"></div>
-
         <div class="source">
             <video id="selfie" autoplay></video>
-            <canvas id="photo" style="display:none;"></canvas>
         </div>
         <div class="combined">
-            <canvas id="stylized" height="192"></canvas>
+            <canvas id="stylized"></canvas>
         </div>
         <div>
             <button id="takePic">Take Picture</button>
@@ -102,10 +102,8 @@
                     <li>
                         <img src="img/styles/style-15.jpg"/>
                     </li>
-
                 </ul>
             </div>
-
         </div>
     </div>
 </div>

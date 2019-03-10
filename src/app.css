@@ -20,6 +20,12 @@ button {
   font-size: smaller;
 }
 
+video {
+  width: 100%;
+  height: auto;
+}
+
+
 #applyStyleButton {
   position:relative;
   left:6em;
@@ -46,12 +52,22 @@ button {
 .container .inputOutput .combined {
   display:none;
   padding: 0.3em;
+  width: 100%;
+  height: auto;
 }
 
 
+#photo {
+  display: none;
+}
+
+#stylized_original {
+  display: none;
+}
 
 #spinner {
-  z-index: 10;
+  position: relative;
+  top: 8em;
   display: none;
   width: 50px;
   height: 50px;
