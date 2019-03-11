@@ -8,7 +8,7 @@ const browsersync = require("browser-sync").create();
 const fs = require('fs-extra');
 
 let distDir = 'dist';
-const webRoot = '../api/webroot';
+const webRoot = 'dist';
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',
@@ -91,8 +91,8 @@ const watchLocal = gulp.parallel(watchFiles, browserSync);
 
 
 
-const defaultTask = () => {
-  return gulp.series(clean, build);
+const defaultTask = (done) => {
+  return gulp.series(clean, build)(done);
 };
 
 exports.clean = clean;

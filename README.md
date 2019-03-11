@@ -27,9 +27,5 @@ Start a local server with hot reload.
 
 	npx gulp watch_local
 
-
-## Install webapp distribution in Docker api directory
-
-	npx gulp install
  
 
