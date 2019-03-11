@@ -6,9 +6,9 @@ styling from different paintings to the photo.
 At the heart of it is a neural network in Tensoflow.js, with weights trainined 
 on about 80 000 paintings.
 
-Paper: [Exploring the structure of a real-time, arbitrary neural artistic stylization network](https://arxiv.org/abs/1705.06830)
-
-Convenience libray for Javascript use: [@magenta/image](https://tensorflow.github.io/magenta-js/image/)
+- Website: [Bitvergnügend/Artsie](https://bitvergnügen.de/artsie)
+- The paper which this is based on: [Exploring the structure of a real-time, arbitrary neural artistic stylization network](https://arxiv.org/abs/1705.06830)
+- The convenience library for Javascript, which does the heavy lifting: [@magenta/image](https://tensorflow.github.io/magenta-js/image/)
 
 
 ## Installation
