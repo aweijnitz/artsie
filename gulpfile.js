@@ -11,11 +11,11 @@ let distDir = 'dist';
 const webRoot = 'dist';
 
 const AUTOPREFIXER_BROWSERS = [
-    'ie >= 11',
-    'ie_mob >= 11',
-    'ff >= 30',
-    'chrome >= 34',
-    'safari >= 7',
+    'ie > 11',
+    'ie_mob > 11',
+    'ff >= 64',
+    'chrome >= 71',
+    'safari >= 10',
     'opera >= 23',
     'ios >= 7',
     'android >= 4.4',
