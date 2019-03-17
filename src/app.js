@@ -23,16 +23,23 @@
         return check;
     }
 
+    function iOS() {
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
     function setCameraConstraints() {
         cameraConstraints = {
             video: {
-                deviceId: {exact: videoSelect.value}
+
             }
         };
 
-        if (isMobileDevice()) {
+        if (isMobileDevice() && !iOS()) {
             cameraConstraints.video.width = {max: 320}
         }
+
+        if(!iOS())
+            cameraConstraints.video.deviceId = {exact: videoSelect.value}
 
     }
 
@@ -77,8 +84,9 @@
         // Fit it
         var scale = 0.5;
 
-        if(isMobileDevice())
+        if (isMobileDevice() && !iOS())
             scale = 1.1;
+
 
         stylizedCanvas.width = imageData.width * scale;
         stylizedCanvas.height = imageData.height * scale;
@@ -116,9 +124,11 @@
          * Note: This is a workaround for a bug in magenta, which doesn't accept a video element (although it should)
          */
 
-        // Don't kill mobile devices
-        videoGrab.width = videoElement.videoWidth;
-        videoGrab.height = videoElement.videoHeight;
+            // Don't kill mobile devices
+        var scale = 1.0;
+        if (iOS()) scale = 0.5;
+        videoGrab.width = videoElement.videoWidth * scale;
+        videoGrab.height = videoElement.videoHeight * scale;
         videoGrab.getContext('2d').drawImage(videoElement, 0, 0);
 
         pictureTaken = true;
@@ -239,6 +249,8 @@
     }
 
 
+    iOS() ? console.log('iOS detected') : console.log('not iOS');
+
 
     navigator.mediaDevices.enumerateDevices()
         .then(gotDevices).then(getStream).catch(handleError);
@@ -254,7 +266,7 @@
 
 
     model.initialize().then(function () {
-        console.log('ready')
+        console.log('neural network model ready!')
     });
 
 })(jQuery, window, document);
