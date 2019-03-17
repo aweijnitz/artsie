@@ -72,6 +72,12 @@ const copyImages = () => {
         .pipe(gulp.dest(distDir+'/img'));
 };
 
+const copyIcon = () => {
+    return gulp.src('./src/favicon.*')
+        .pipe(plumber())
+        .pipe(gulp.dest(distDir));
+};
+
 const copyLib = () => {
     return gulp.src('./src/lib/**')
         .pipe(plumber())
@@ -79,7 +85,7 @@ const copyLib = () => {
 };
 
 const build = (done) => {
-    return gulp.series(copyLib, copyImages, minifyHTML, minifyCSS, minifyJS)(done);
+    return gulp.series(copyLib, copyImages, copyIcon, minifyHTML, minifyCSS, minifyJS)(done);
 };
 
 const clean = (done) => {
@@ -95,7 +101,7 @@ const install = (done) => {
 };
 
 const watchFiles = () => {
-    gulp.watch(["./src/**/*.html"], gulp.series(copyLib, copyImages, minifyHTML, browserSyncReload));
+    gulp.watch(["./src/**/*.html"], gulp.series(copyLib, copyImages, copyIcon, minifyHTML, browserSyncReload));
     gulp.watch(["./src/**/*.css"], gulp.series(minifyCSS, browserSyncReload));
     gulp.watch(["./src/**/*.js"], gulp.series(minifyJS, browserSyncReload));
 };
