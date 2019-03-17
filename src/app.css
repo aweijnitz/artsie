@@ -25,6 +25,14 @@ video {
   height: auto;
 }
 
+#log {
+    display: none;
+    font-size: x-small;
+}
+
+#takePic {
+    display: none;
+}
 
 #applyStyleButton {
   position:relative;
