@@ -266,11 +266,11 @@
     if (loggingEnabled)
         $('#log').show();
 
-    iOS() ? log('iOS detected') : log('not iOS');
 
     setSpinner(true);
     model.initialize().then(function () {
         setSpinner(false);
+        iOS() ? videoElement.setAttribute("playsinline", true) : log('not iOS');
         $('#takePic').show(200);
 
         navigator.mediaDevices.enumerateDevices()
