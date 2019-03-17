@@ -27,5 +27,10 @@ Start a local server with hot reload.
 
 	npx gulp watch_local
 
+## Known Issues
+
+- No pictures produced on *iOS devices*
+    - It seems iOS handles the `canvas` tag differently somehow. The end result is black frames instead of images.
+    
  
 
