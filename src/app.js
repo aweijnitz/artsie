@@ -103,7 +103,7 @@
 
         stylizedCanvas.width = imageData.width * scale;
         stylizedCanvas.height = imageData.height * scale;
-        log('Styled canvas width '+stylizedCanvas.width);
+        log('Styled canvas width ' + stylizedCanvas.width);
 
         stylizedCanvas.getContext('2d')
             .drawImage(stylizedOriginalCanvas,
@@ -267,26 +267,39 @@
         $('#log').show();
 
 
-    setSpinner(true);
-    model.initialize().then(function () {
-        setSpinner(false);
-        iOS() ? videoElement.setAttribute("playsinline", true) : log('not iOS');
-        $('#takePic').show(200);
+    if (iOS()) {
+        $('.styleSelectContainer').hide(50, function () {
+            $('.inputOutput').hide(50, function () {
+                $('.container').append("<h2>Camera operations not supported on iOS</h2>" +
+                    "<p>It looks like you are using an <strong>iPhone, or iPad</strong>. Unfortunately, there is " +
+                    "<strong>an issue</strong> with accessing the pixels of the camera on this device.</p>" +
+                    "<p> Please try on desktop or on an Android device.</p>");
+            });
+        });
+    } else {
+        setSpinner(true);
+        model.initialize().then(function () {
+            setSpinner(false);
+//        iOS() ? videoElement.setAttribute("playsinline", true) : log('not iOS');
+            $('#takePic').show(200);
 
-        navigator.mediaDevices.enumerateDevices()
-            .then(gotDevices).then(getStream).catch(handleError);
+            navigator.mediaDevices.enumerateDevices()
+                .then(gotDevices).then(getStream).catch(handleError);
 
-        $("#selfie").click(function () {
-            takePicture();
+            $("#selfie").click(function () {
+                takePicture();
+            });
+
+
+            $(".privacy").click(function () {
+                $("#privacy-policy").fadeToggle("fast");
+            });
+
+
+            log('neural network model ready!')
         });
 
+    }
 
-        $(".privacy").click(function () {
-            $("#privacy-policy").fadeToggle("fast");
-        });
-
-
-        log('neural network model ready!')
-    });
 
 })(jQuery, window, document);

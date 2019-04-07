@@ -1,15 +1,18 @@
 # Artsie - Arty Selfies with Arbitrary Style Transfer
 
-This is a small webapp that lets the user take a selfie and apply 
-styling from different paintings to the photo.
+This is a small webapp that lets the user take a selfie and apply
+styling from different paintings to the photo. It uses a machine learning to do "style transfer" from one 
+image to another (see paper linked below).
 
-At the heart of it is a neural network in Tensoflow.js, with weights trainined 
+At the heart of it is a neural network in Tensorflow.js, with weights trainined 
 on about 80 000 paintings.
+
+![test image size](/documentation_assets/artsie-process.png){:class="img-responsive"}
 
 - Website: [Bitvergnügen/Artsie](https://bitvergnügen.de/artsie)
 - The paper which this is based on: [Exploring the structure of a real-time, arbitrary neural artistic stylization network](https://arxiv.org/abs/1705.06830)
 - The convenience library for Javascript, which does the heavy lifting: [@magenta/image](https://tensorflow.github.io/magenta-js/image/)
-
+- Library or machine learning algorithms in the Javascritp: [Tensorflow.js](https://www.tensorflow.org/js)
 
 ## Installation
 
